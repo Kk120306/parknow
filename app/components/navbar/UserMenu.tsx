@@ -6,9 +6,19 @@ import Avatar from '../Avatar';
 import { useState } from 'react';
 import MenuItem from './MenuItem';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
+import useLoginModal from '@/app/hooks/useLoginModal';
+import { SafeUser } from '@/app/types';
+import { signOut } from 'next-auth/react';
 
-const UserMenu = () => {
+interface UserMenuProps {
+    currentUser?: SafeUser | null;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({
+    currentUser
+}) => {
     const registerModal = useRegisterModal();
+    const LoginModal = useLoginModal();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = () => {
@@ -35,17 +45,49 @@ const UserMenu = () => {
 
             {isOpen && (
                 <div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
-                    <div className="flex flex-col cursor-pointer">
-                        <MenuItem
-                            onClick={() => { }}
-                            label="Login"
-                        />
-                        <MenuItem
-                            onClick={registerModal.onOpen}
-                            label="Sign up"
-                        />
-                    </div>
-                </div>)}
+                    {currentUser ? (
+                        <div className="flex flex-col cursor-pointer">
+                            <MenuItem
+                                onClick={() => { }}
+                                label="My spots"
+                            />
+                            <MenuItem
+                                onClick={() => { }}
+                                label="My favorites"
+                            />
+                            <MenuItem
+                                onClick={() => { }}
+                                label="My reservations"
+                            />
+                            <MenuItem
+                                onClick={() => { }}
+                                label="My properties"
+                            />
+                            <MenuItem
+                                onClick={() => { }}
+                                label="ParkNow my space"
+                            />
+                            <MenuItem 
+                                border={true}
+                                onClick={() => signOut()}
+                                label="Logout"
+                            />
+                        </div>
+                    ) : (
+                        <div className="flex flex-col cursor-pointer">
+                            <MenuItem
+                                onClick={LoginModal.onOpen}
+                                label="Login"
+                            />
+                            <MenuItem
+                                onClick={registerModal.onOpen}
+                                label="Sign up"
+                            />
+                        </div>
+                    )}
+
+                </div>
+            )}
         </div>
     );
 }

@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/app/components/navbar/Navbar";
 import RegisterModal from "./components/modals/RegisterModal";
 import ToasterProvider from "./providers/ToasterProvider";
+import LoginModal from "./components/modals/LoginModal";
+import getCurrentUser from "./actions/getCurrentUser";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,11 +14,12 @@ export const metadata: Metadata = {
     description: "Discover and rent parking spots near you in seconds with ParkNow. List your unused space, earn passive income, and make parking hassle-free anywhere, anytime.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const currentUser = await getCurrentUser();
     return (
         <html lang="en">
             <body
@@ -24,7 +27,8 @@ export default function RootLayout({
             >
                 <ToasterProvider />
                 <RegisterModal />
-                <Navbar />
+                <LoginModal />
+                <Navbar currentUser={currentUser} />
                 {children}
             </body>
         </html>
