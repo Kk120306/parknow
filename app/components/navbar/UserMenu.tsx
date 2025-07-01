@@ -5,8 +5,10 @@ import Avatar from '../Avatar';
 
 import { useState } from 'react';
 import MenuItem from './MenuItem';
+import useRegisterModal from '@/app/hooks/useRegisterModal';
 
 const UserMenu = () => {
+    const registerModal = useRegisterModal();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = () => {
@@ -36,11 +38,11 @@ const UserMenu = () => {
                     <div className="flex flex-col cursor-pointer">
                         <MenuItem
                             onClick={() => { }}
-                            label="login"
+                            label="Login"
                         />
                         <MenuItem
-                            onClick={() => { }}
-                            label="sign up"
+                            onClick={registerModal.onOpen}
+                            label="Sign up"
                         />
                     </div>
                 </div>)}
