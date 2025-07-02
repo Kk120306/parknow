@@ -9,6 +9,7 @@ import CategoryInput from '../inputs/CategoryInput';
 import { FieldValues, useForm } from 'react-hook-form';
 import CountrySelect from '../inputs/CountrySelect';
 import dynamic from 'next/dynamic';
+import Counter from '../inputs/Counter';
 
 
 const Map = dynamic(() => import('@/app/components/Map'), {
@@ -45,6 +46,7 @@ const RentModal = () => {
     });
 
     const category = watch('category');
+    const spaceCount = watch('spaceCount');
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
             shouldValidate: true,
@@ -114,6 +116,23 @@ const RentModal = () => {
                 />
                 <Map
                     center={location?.latlng}
+                />
+            </div>
+        );
+    }
+
+    if (step === STEPS.INFO) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Share some basics about your space"
+                    subtitle="What does your space offer?"
+                />
+                <Counter
+                    title="Cars"
+                    subtitle="How many cars can fit in your space?"
+                    value={spaceCount}
+                    onChange={(value) => setCustomValue('spaceCount', value)}
                 />
             </div>
         );
