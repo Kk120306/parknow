@@ -7,6 +7,13 @@ import { useMemo, useState } from 'react';
 import { categories } from '../navbar/Categories';
 import CategoryInput from '../inputs/CategoryInput';
 import { FieldValues, useForm } from 'react-hook-form';
+import CountrySelect from '../inputs/CountrySelect';
+import dynamic from 'next/dynamic';
+
+
+const Map = dynamic(() => import('@/app/components/Map'), {
+    ssr: false,
+});
 
 enum STEPS {
     CATEGORY = 0,
@@ -38,7 +45,7 @@ const RentModal = () => {
     });
 
     const category = watch('category');
-    const setCustomValue = (id : string, value: any) => {
+    const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
             shouldValidate: true,
             shouldDirty: true,
@@ -92,12 +99,32 @@ const RentModal = () => {
         </div>
     )
 
+    if (step === STEPS.LOCATION) {
+        const location = watch('location');
+
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Where is your space located?"
+                    subtitle="Help guests find you!"
+                />
+                <CountrySelect
+                    value={location}
+                    onChange={(value) => setCustomValue('location', value)}
+                />
+                <Map
+                    center={location?.latlng}
+                />
+            </div>
+        );
+    }
+
     return (
         <Modal
             title="ParkNow your home!"
             isOpen={rentModal.isOpen}
             onClose={rentModal.onClose}
-            onSubmit={rentModal.onClose}
+            onSubmit={onNext}
             actionLabel={actionLabel}
             secondaryActionLabel={secondaryActionLabel}
             secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
