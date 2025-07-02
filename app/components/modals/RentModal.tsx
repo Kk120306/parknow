@@ -10,6 +10,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import CountrySelect from '../inputs/CountrySelect';
 import dynamic from 'next/dynamic';
 import Counter from '../inputs/Counter';
+import ImageUpload from '../inputs/ImageUpload';
 
 
 const Map = dynamic(() => import('@/app/components/Map'), {
@@ -47,6 +48,9 @@ const RentModal = () => {
 
     const category = watch('category');
     const spaceCount = watch('spaceCount');
+    const imageSrc = watch('imageSrc');
+
+
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
             shouldValidate: true,
@@ -133,6 +137,21 @@ const RentModal = () => {
                     subtitle="How many cars can fit in your space?"
                     value={spaceCount}
                     onChange={(value) => setCustomValue('spaceCount', value)}
+                />
+            </div>
+        );
+    }
+
+    if (step === STEPS.IMAGES) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Add a photo of your space"
+                    subtitle="Show guests what your space looks like!"
+                />
+                <ImageUpload
+                    value={imageSrc}
+                    onChange={(value) => setCustomValue('imageSrc', value)}
                 />
             </div>
         );
