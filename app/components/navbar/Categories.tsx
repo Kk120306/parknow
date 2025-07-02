@@ -59,7 +59,7 @@ export const categories = [
         description: "Open-air parking without a roof",
     },
     {
-        label: "EV Charging",
+        label: "EV",
         icon: BsPlug,
         description: "Spots equipped with electric vehicle chargers",
     },
