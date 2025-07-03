@@ -16,7 +16,7 @@ const Search = () => {
                     <div className="hidden sm:block">
                         Add Guests
                     </div>
-                    <div className="p-2 bg-rose-500 text-white rounded-full">
+                    <div className="p-2 bg-blue-800 text-white rounded-full">
                         <BiSearch className="h-5 w-5" />
                     </div>
                 </div>

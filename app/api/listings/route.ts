@@ -18,6 +18,15 @@ export async function POST(req : Request) {
     const body = await req.json();
     const { title, description, imageSrc, category, spaceCount, location, price } = body;
 
+    if (!title || !description || !imageSrc || !category || !spaceCount || !price || !location) {
+        return NextResponse.json(
+            { error: 'Missing required fields' },
+            {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' },
+            }
+        );
+    }
 
     try {
         const listing = await client.listing.create({

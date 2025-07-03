@@ -113,7 +113,7 @@ const LoginModal = () => {
                         loginModal.onClose();
                         registerModal.onOpen();
                     }}
-                    className="text-rose-500 cursor-pointer hover:underline">
+                    className="text-blue-800 cursor-pointer hover:underline">
                     Sign up
                 </span>
             </div>

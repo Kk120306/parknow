@@ -1,7 +1,7 @@
 'use client'
 
-import { CarFront } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const Logo = () => {
     const router = useRouter();
@@ -11,7 +11,13 @@ const Logo = () => {
             className="cursor-pointer hover:opacity-80 transition"
             onClick={() => router.push('/')}
         >
-            <CarFront className="h-8 w-8 text-primary hidden md:block" />
+            <Image
+                src="/images/logo.png"
+                alt="ParkNow Logo"
+                width={100}
+                height={100}
+                className="hidden md:block"
+            />
         </div>
     );
 };

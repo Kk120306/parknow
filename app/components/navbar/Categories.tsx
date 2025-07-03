@@ -74,12 +74,12 @@ export const categories = [
         description: "Smaller spots designed for motorcycles",
     },
     {
-        label: "Short-Term",
+        label: "Short",
         icon: BsClock,
         description: "Hourly or daily rental parking",
     },
     {
-        label: "Long-Term",
+        label: "Long",
         icon: BsCalendar,
         description: "Monthly or extended duration parking options",
     },
