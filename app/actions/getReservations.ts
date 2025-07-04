@@ -1,4 +1,4 @@
-import clinet from "@/app/lib/prismadb";
+import client from "@/app/lib/prismadb";
 
 interface IParams {
     listingId?: string;
@@ -6,10 +6,7 @@ interface IParams {
     authorId?: string;
 }
 
-
-export default async function getReservations(
-    params: IParams
-) {
+export default async function getReservations(params: IParams) {
     try {
         const { listingId, userId, authorId } = await params;
 
@@ -24,11 +21,12 @@ export default async function getReservations(
         }
 
         if (authorId) {
-            query.authorId = { userId: authorId };
+            query.listing = {
+                userId: authorId
+            };
         }
 
-
-        const reservations = await clinet.reservation.findMany({
+        const reservations = await client.reservation.findMany({
             where: query,
             include: {
                 listing: true,
@@ -49,8 +47,7 @@ export default async function getReservations(
             },
         }));
 
-
     } catch (error: any) {
-        throw new Error(error)
+        throw new Error(error);
     }
 }
