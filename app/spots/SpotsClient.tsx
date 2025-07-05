@@ -43,7 +43,7 @@ const SpotsClient: React.FC<SpotsClientInterface> = ({
             <Container>
                 <Heading
                     title="Your Reservations"
-                    subtitle="Bookings on your properties"
+                    subtitle="Properties you have booked"
                 />
                 <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
                     {reservations.map((reservation) => (

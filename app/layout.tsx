@@ -8,6 +8,7 @@ import LoginModal from "./components/modals/LoginModal";
 import getCurrentUser from "./actions/getCurrentUser";
 import RentModal from "./components/modals/RentModal";
 import SearchModal from "./components/modals/SearchModal";
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,19 +24,20 @@ export default async function RootLayout({
 }>) {
     const currentUser = await getCurrentUser();
     return (
-        <html lang="en">
-            <body
-                className={`${inter.className} antialiased`}
-            >
+        <html lang="en" className="h-full">
+            <body className={`${inter.className} h-full flex flex-col`}>
                 <ToasterProvider />
                 <RegisterModal />
                 <LoginModal />
                 <RentModal />
                 <SearchModal />
                 <Navbar currentUser={currentUser} />
-                <div className="pb-20 pt-28 md:pt-50">
+
+                <main className="flex-grow pt-28 md:pt-50">
                     {children}
-                </div>
+                </main>
+
+                <Footer />
             </body>
         </html>
     );
