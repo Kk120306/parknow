@@ -4,7 +4,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import client from "@/app/lib/prismadb";
 
 interface IParams {
-    listingId?: string;
+    listingId: string; 
 }
 
 export async function POST(
@@ -16,7 +16,7 @@ export async function POST(
         return NextResponse.error();
     }
 
-    const { listingId } = await params;
+    const { listingId } = params;  
 
     if (!listingId || typeof listingId !== "string") {
         throw new Error("Invalid ID");
@@ -39,7 +39,7 @@ export async function POST(
 }
 
 export async function DELETE(
-    req : Request,
+    req: Request,
     { params }: { params: IParams }
 ) {
     const currentUser = await getCurrentUser();
@@ -47,7 +47,7 @@ export async function DELETE(
         return NextResponse.error();
     }
 
-    const { listingId } = await params;
+    const { listingId } = params;  
 
     if (!listingId || typeof listingId !== "string") {
         throw new Error("Invalid ID");
