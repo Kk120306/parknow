@@ -13,9 +13,9 @@ export default async function getListings(
     params: IListingParams
 ) {
     try {
-        const { userId, spaceCount, category, startDate, endDate, locationValue } = await params;
+        const { userId, spaceCount, category, startDate, endDate, locationValue } = params;
 
-        let query: any = {};
+        const query: Record<string, unknown> = {};
 
         if (userId) {
             query.userId = userId;
@@ -23,7 +23,7 @@ export default async function getListings(
 
         if (spaceCount) {
             query.spaceCount = {
-                gte: +spaceCount,
+                gte: spaceCount,
             };
         }
 
@@ -43,7 +43,6 @@ export default async function getListings(
                             {
                                 endDate: { gte: startDate },
                                 startDate: { lte: startDate },
-
                             },
                             {
                                 startDate: { lte: endDate },
@@ -52,23 +51,27 @@ export default async function getListings(
                         ]
                     }
                 }
-            }
-        };
+            };
+        }
 
         const listings = await client.listing.findMany({
-        where: query,
-        orderBy: {
-            createdAt: 'desc',
-        },
-    });
+            where: query,
+            orderBy: {
+                createdAt: 'desc',
+            },
+        });
 
-    const safeListings = listings.map((listing) => ({
-        ...listing,
-        createdAt: listing.createdAt.toISOString(),
-    }));
+        const safeListings = listings.map((listing) => ({
+            ...listing,
+            createdAt: listing.createdAt.toISOString(),
+        }));
 
-    return safeListings;
-} catch (error: any) {
-    throw new Error(error);
-}
+        return safeListings;
+
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            throw new Error(error.message);
+        }
+        throw new Error(String(error));
+    }
 }

@@ -10,11 +10,11 @@ export default async function getListingById(
     try {
         const { listingId } = await params;
         const listing = await client.listing.findUnique({
-            where : {
-                id : listingId
+            where: {
+                id: listingId
             },
-            include : {
-                user : true,
+            include: {
+                user: true,
             }
         });
 
@@ -32,7 +32,7 @@ export default async function getListingById(
                 emailVerified: listing.user.emailVerified ? listing.user.emailVerified.toISOString() : null,
             }
         }
-    } catch (error : any) {
-        throw new Error(error);
+    } catch (_error) {
+        throw new Error(_error instanceof Error ? _error.message : String(_error));
     }
 }

@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
+import React, { useCallback } from 'react';
 import { IconType } from 'react-icons';
 import { clsx } from 'clsx';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useCallback } from 'react';
-import qs from "query-string";
+import qs, { ParsedQuery } from 'query-string';
 
 interface CategoryBoxProps {
     icon: IconType;
@@ -12,51 +12,45 @@ interface CategoryBoxProps {
     selected?: boolean;
 }
 
-const CategoryBox: React.FC<CategoryBoxProps> = ({
-    icon: Icon,
-    label,
-    selected
-}) => {
-    const router = useRouter(); 
+const CategoryBox: React.FC<CategoryBoxProps> = ({ icon: Icon, label, selected }) => {
+    const router = useRouter();
     const params = useSearchParams();
 
     const handleClick = useCallback(() => {
-        let currentQuery = {};
+        const currentQuery: ParsedQuery<string> = params ? qs.parse(params.toString()) : {};
 
-        if (params) {
-            currentQuery = qs.parse(params.toString());
-        }
-
-        const updatedQuery: any = {
+        const updatedQuery: ParsedQuery<string> = {
             ...currentQuery,
-            category: label
+            category: label,
         };
 
         if (params?.get('category') === label) {
             delete updatedQuery.category;
         }
 
-        const url = qs.stringifyUrl({
-            url : "/",
-            query: updatedQuery
-        }, { skipNull: true });
+        const url = qs.stringifyUrl(
+            {
+                url: '/',
+                query: updatedQuery,
+            },
+            { skipNull: true }
+        );
 
-        router.push(url.toString());
+        router.push(url);
     }, [label, params, router]);
 
     return (
-        <div 
+        <div
             onClick={handleClick}
-            className={clsx(`flex flex-col items-center justify-center gap-2 p-3 border-b-2 hover:text-neutral-800 transition cursor-pointer`,
-            selected ? 'border-neutral-800 text-neutral-800' : 'border-transparent text-neutral-500'
-        )}>
+            className={clsx(
+                'flex flex-col items-center justify-center gap-2 p-3 border-b-2 hover:text-neutral-800 transition cursor-pointer',
+                selected ? 'border-neutral-800 text-neutral-800' : 'border-transparent text-neutral-500'
+            )}
+        >
             <Icon size={26} />
-            <div className="text-sm font-medium">
-                {label}
-            </div>
-
+            <div className="text-sm font-medium">{label}</div>
         </div>
     );
-}
+};
 
 export default CategoryBox;

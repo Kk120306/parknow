@@ -1,9 +1,9 @@
 'use client'
 
 interface HeadingProps {
-    title? : String, 
-    subtitle? : String,
-    center? : Boolean
+    title? : string, 
+    subtitle? : string,
+    center? : boolean
 }
 
 const Heading : React.FC<HeadingProps> = ({

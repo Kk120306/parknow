@@ -1,6 +1,6 @@
 import client from "@/app/lib/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import { NextResponse } from "next/server";
+
 
 export default async function getFavoriteListing() {
     try {
@@ -26,7 +26,7 @@ export default async function getFavoriteListing() {
 
         return safeFavorites;
 
-    } catch (error: any) {
-        throw new Error(error);
+    } catch (_error) {
+        throw new Error(_error instanceof Error ? _error.message : String(_error));
     }
 }

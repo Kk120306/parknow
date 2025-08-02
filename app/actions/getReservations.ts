@@ -8,9 +8,9 @@ interface IParams {
 
 export default async function getReservations(params: IParams) {
     try {
-        const { listingId, userId, authorId } = await params;
+        const { listingId, userId, authorId } = params;
 
-        const query: any = {};
+        const query: Record<string, unknown> = {};
 
         if (listingId) {
             query.listingId = listingId;
@@ -47,7 +47,10 @@ export default async function getReservations(params: IParams) {
             },
         }));
 
-    } catch (error: any) {
-        throw new Error(error);
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            throw new Error(error.message);
+        }
+        throw new Error(String(error));
     }
 }
