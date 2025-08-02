@@ -40,10 +40,10 @@ const useFavorite = ({ listingId, currentUser }: UseFavoriteProps) => {
             await request();
             router.refresh();
             toast.success(hasFavorites ? "Removed from favorites" : "Added to favorites");
-        } catch (error) {
+        } catch (_error) {
             toast.error("Something went wrong");
-            return;
         }
+
 
     }, [listingId, currentUser, router, loginModal, hasFavorites]);
 

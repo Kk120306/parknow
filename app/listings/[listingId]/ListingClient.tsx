@@ -55,7 +55,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
     const [dateRange, setDateRange] = useState<Range>(intialDateRange);
     const [totalPrice, setTotalPrice] = useState(listing.price);
 
-    const onCreateReservation = useCallback(async (data: any) => {
+    const onCreateReservation = useCallback(async (data: Range) => {
         if (!currentUser) {
             return loginModal.onOpen();
         }

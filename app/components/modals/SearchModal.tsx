@@ -39,13 +39,13 @@ const SearchModal = () => {
         ssr: false,
     }), []);
 
-    const onBack = () => {
+    const onBack = useCallback(() => {
         setStep((value) => value - 1);
-    };
+    }, []);
 
-    const onNext = () => {
+    const onNext = useCallback(() => {
         setStep((value) => value + 1);
-    };
+    }, []);
 
     const onSubmit = useCallback(async () => {
         if (step !== STEP.INFO) {
@@ -57,7 +57,7 @@ const SearchModal = () => {
             currentQuery = qs.parse(params.toString());
         }
 
-        const updatedQuery: any = {
+        const updatedQuery: Record<string, string | number | undefined> = {
             ...currentQuery,
             locationValue: location?.value,
             spaceCount,
@@ -131,7 +131,7 @@ const SearchModal = () => {
     if (step === STEP.INFO) {
         bodyContent = (
             <div className="flex flex-col gap-8">
-                <Heading 
+                <Heading
                     title="More information"
                     subtitle="Find your perfect parking spot"
                 />
